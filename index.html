@@ -3,9 +3,15 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Nur Sofia Balqis — My Portfolio</title>
+<title>Nur Sofia Balqis — Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&family=Courier+Prime&display=swap" rel="stylesheet"/>
+
+*{box-sizing:border-box;margin:0;padding:0}
+a,button{cursor:pointer}
+
 <style>
+
+#jomjalan-modal video { outline: none; }
 :root{
   --white:#fafaf7;
   --ink:#111110;
@@ -21,13 +27,8 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--white);color:var(--ink);font-family:var(--sans);overflow-x:hidden;cursor:none}
+body{background:var(--white);color:var(--ink);font-family:var(--sans);overflow-x:hidden;}
 
-/* CURSOR */
-#cur{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--ink);pointer-events:none;z-index:9999;transition:width .3s,height .3s,background .3s,transform .2s}
-#cur-ring{position:fixed;width:32px;height:32px;border-radius:50%;border:1px solid rgba(17,17,16,.3);pointer-events:none;z-index:9998;transition:width .3s,height .3s,border-color .3s,left .12s ease,top .12s ease;transform:translate(-50%,-50%)}
-body.hov #cur{transform:scale(0)}
-body.hov #cur-ring{width:52px;height:52px;border-color:var(--accent)}
 
 /* LOADER */
 #loader{position:fixed;inset:0;background:var(--ink);z-index:1000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.5rem;transition:opacity .7s,visibility .7s}
@@ -130,10 +131,10 @@ section:not(#hero){padding:7rem 4rem}
 /* PROJECTS */
 #projects{background:var(--soft)}
 .proj-filters{display:flex;gap:.45rem;margin-bottom:3rem;flex-wrap:wrap}
-.pf{font-size:.63rem;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:.32rem .85rem;border:1px solid var(--border);border-radius:2rem;background:transparent;color:var(--muted);cursor:none;transition:all .22s}
+.pf{font-size:.63rem;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:.32rem .85rem;border:1px solid var(--border);border-radius:2rem;background:transparent;color:var(--muted);cursor:pointer;transition:all .22s}
 .pf.on,.pf:hover{background:var(--ink);color:var(--white);border-color:var(--ink)}
 .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.pcard{background:var(--white);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;transition:transform .35s,box-shadow .35s;cursor:none}
+.pcard{background:var(--white);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;transition:transform .35s,box-shadow .35s;cursor:default}
 .pcard:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(17,17,16,.1)}
 .pcard.hide{opacity:0;pointer-events:none;transform:scale(.96)}
 .p-img-upload{width:100%;aspect-ratio:16/9;background:var(--soft);border-bottom:1.5px dashed var(--mid);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.5rem;cursor:pointer;transition:border-color .2s,background .2s;position:relative}
@@ -156,7 +157,7 @@ section:not(#hero){padding:7rem 4rem}
 /* AWARDS */
 #awards{background:var(--white)}
 .aw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.acard{border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:box-shadow .3s,transform .3s;cursor:none}
+.acard{border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:box-shadow .3s,transform .3s;cursor:default}
 .acard:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(17,17,16,.08)}
 .acard-img-wrap{width:100%;aspect-ratio:4/3;position:relative;overflow:hidden;background:var(--soft)}
 .acard-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
@@ -177,7 +178,7 @@ section:not(#hero){padding:7rem 4rem}
 /* VOLUNTEERING */
 #volunteering{background:var(--soft)}
 .vol-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
-.vcard{background:var(--white);border-radius:6px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;transition:box-shadow .3s,transform .3s;cursor:none}
+.vcard{background:var(--white);border-radius:6px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;transition:box-shadow .3s,transform .3s;cursor:default}
 .vcard:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(17,17,16,.08)}
 .vcard-img-side{position:relative;overflow:hidden;background:var(--mid);min-height:220px}
 .vcard-img-side img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
@@ -270,16 +271,15 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
 
 <div id="loader">
   <div class="ld-name">Nur Sofia Balqis</div>
-  <div class="ld-sub">My Portfolio</div>
+  <div class="ld-sub">Portfolio</div>
   <div class="ld-bar"><div class="ld-fill"></div></div>
 </div>
 
-<div id="cur"></div>
-<div id="cur-ring"></div>
+
 <div id="pgbar"></div>
 
 <nav id="nav">
-  <a class="nav-logo" href="#">My <em>Portfolio</em></a>
+  <a class="nav-logo" href="#"><em>Portfolio</em></a>
   <ul class="nav-mid">
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
@@ -327,18 +327,14 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
   <div class="mtrack">
     <span class="mitem">Web Development</span><span class="msep">✦</span>
     <span class="mitem">Test Automation</span><span class="msep">✦</span>
-    <span class="mitem">Database Design</span><span class="msep">✦</span>
     <span class="mitem">Data Analytics</span><span class="msep">✦</span>
-    <span class="mitem">IoT Systems</span><span class="msep">✦</span>
     <span class="mitem">Mobile Apps</span><span class="msep">✦</span>
     <span class="mitem">QA Engineering</span><span class="msep">✦</span>
     <span class="mitem">Youth Empowerment</span><span class="msep">✦</span>
     <span class="mitem">Community Service</span><span class="msep">✦</span>
     <span class="mitem">Web Development</span><span class="msep">✦</span>
     <span class="mitem">Test Automation</span><span class="msep">✦</span>
-    <span class="mitem">Database Design</span><span class="msep">✦</span>
     <span class="mitem">Data Analytics</span><span class="msep">✦</span>
-    <span class="mitem">IoT Systems</span><span class="msep">✦</span>
     <span class="mitem">Mobile Apps</span><span class="msep">✦</span>
     <span class="mitem">QA Engineering</span><span class="msep">✦</span>
     <span class="mitem">Youth Empowerment</span><span class="msep">✦</span>
@@ -353,7 +349,7 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
       <h2 class="sec-h rv" style="transition-delay:.08s">Who I <em>am</em></h2>
       <div class="ab-quote rv" style="transition-delay:.14s">"Adaptable, responsible, and eager to continue learning through scholarship opportunities to support future studies and make a positive impact in society."</div>
       <p class="ab-body rv" style="transition-delay:.18s">I am Nur Sofia Balqis Binti Rospi, a Computer Science Diploma graduate from Kolej Profesional MARA Indera Mahkota, Pahang, with a CGPA of 3.80. I am experienced in web development, test automation, and database management, and I am deeply passionate about applying technology to create meaningful change in communities.</p>
-      <p class="ab-body rv" style="transition-delay:.22s">During my internship at IDS Medical Systems, I gained hands-on experience in software quality assurance, executing automation tests on real medical systems. Beyond academics, I actively contribute as a volunteer tutor, college secretariat, and community programme participant — reflecting my commitment to leadership, teamwork, and social responsibility.</p>
+      <p class="ab-body rv" style="transition-delay:.22s">During my internship at IDS Medical Systems, I gained hands-on experience in software quality assurance, executing automation tests on real medical systems. Beyond academics, I actively contribute as a volunteer tutor, college secretariat, and community programme participant, reflecting my commitment to leadership, teamwork, and social responsibility.</p>
       <div class="edu-block rv" style="transition-delay:.28s">
         <div class="edu-label">Education</div>
         <div class="edu-item">
@@ -384,7 +380,7 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
         <div class="vrow rv-r" style="transition-delay:.1s"><span class="v-num">02</span><div><div class="v-title">Youth Empowerment</div><div class="v-desc">Active volunteer tutor with Teach For Malaysia's ERTI programme, helping students recover and thrive academically.</div></div></div>
         <div class="vrow rv-r" style="transition-delay:.15s"><span class="v-num">03</span><div><div class="v-title">Community Service</div><div class="v-desc">Participant in Program Rakan Prihatin and residential college leadership roles serving peers and the wider community.</div></div></div>
         <div class="vrow rv-r" style="transition-delay:.2s"><span class="v-num">04</span><div><div class="v-title">Lifelong Learning</div><div class="v-desc">Committed to continuous growth through scholarship opportunities, academic excellence, and cross-disciplinary curiosity.</div></div></div>
-        <div class="vrow rv-r" style="transition-delay:.25s"><span class="v-num">05</span><div><div class="v-title">Innovation &amp; Problem-Solving</div><div class="v-desc">Gold and Silver award winner at international exhibitions — bringing creative, evidence-based solutions to real-world challenges.</div></div></div>
+        <div class="vrow rv-r" style="transition-delay:.25s"><span class="v-num">05</span><div><div class="v-title">Innovation &amp; Problem-Solving</div><div class="v-desc">Gold and Silver award winner at international exhibitions, bringing creative, evidence-based solutions to real-world challenges.</div></div></div>
       </div>
     </div>
   </div>
@@ -417,8 +413,9 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
         <div class="ex-title">Data Analytics Officer</div>
         <div class="ex-co">Charisma Movement</div>
         <ul class="ex-bullets">
-          <li>Analysing organisational data to support movement decisions and programme tracking</li>
-          <li>Building visual reports and dashboards for leadership review</li>
+          <li>Conduct research on underdiscussed topics related to Malaysia and Malaysian society through data collection and in-depth quantitative and qualitative analysis.</li>
+          <li>Transform data and research insights into engaging infographics to make information accessible and inspire youths to think beyond their horizons.</li>
+          <li>Advocate for the Sustainable Development Goals (SDGs) through data-driven research and visual storytelling.</li>
         </ul>
       </div>
       <div class="ex-tags"><span class="etag">Analytics</span><span class="etag">Reporting</span></div>
@@ -430,8 +427,10 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
         <div class="ex-title">Technical Officer</div>
         <div class="ex-co">The STEM Bulletin</div>
         <ul class="ex-bullets">
-          <li>Managing technical infrastructure and digital publishing pipeline for STEM content</li>
-          <li>Supporting editorial teams with web tools, platform setup, and digital workflows</li>
+          <li>Manage and maintain the STEM Bulletin article website using Wix, ensuring the platform functions smoothly for readers and contributors.</li>
+          <li>Update and publish new articles to keep content current, while identifying and resolving technical issues to improve usability and performance.</li>
+          <li>Organise and format STEM-related articles and announcements to enhance readability and presentation.</li>
+          <li>Collaborate with the team to ensure accurate, timely, and well-structured publication of content to support audience engagement.</li>
         </ul>
       </div>
       <div class="ex-tags"><span class="etag">Web</span><span class="etag">Publishing</span></div>
@@ -443,8 +442,11 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
         <div class="ex-title">Residential College Secretariat</div>
         <div class="ex-co">Kolej Profesional MARA Indera Mahkota</div>
         <ul class="ex-bullets">
-          <li>Coordinated residential college activities and administrative responsibilities for students</li>
-          <li>Liaised between student body and college management to address welfare and programme needs</li>
+          <li>Acted as a link between the college fellow and students, handling issues such as assisting those who were sick or facing problems during duty days.</li>
+          <li>Responded to emergencies like power outages by contacting college management promptly.</li>
+          <li>Responsible for opening and closing the storage room during semester breaks and helping maintain cleanliness and discipline in the dormitory.</li>
+          <li>Volunteered as a substitute teacher for a Level 1 English class, using game-learning techniques to teach Malaysian food vocabulary in English and the Frog platform for resources.</li>
+          <li>Tutored students in Mathematics by building foundational understanding before advancing to higher-level questions, helping students regain confidence and motivation.</li>
         </ul>
       </div>
       <div class="ex-tags"><span class="etag">Leadership</span><span class="etag">Administration</span></div>
@@ -454,13 +456,14 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
       <div class="ex-body">
         <span class="ex-type">Leadership</span>
         <div class="ex-title">Head of Funds Exco</div>
-        <div class="ex-co">Peer Guidance Club · Kolej Profesional MARA Indera Mahkota</div>
+        <div class="ex-co">KPMIM Peer Guidance Club</div>
         <ul class="ex-bullets">
-          <li>Led the fundraising committee, planning and executing fund collection activities</li>
-          <li>Managed budget allocation and financial reporting for club events and initiatives</li>
+          <li>Planned and executed fundraising activities including a Sticky Milk drinks sales initiative, operating a booth in college for 4 weeks with my team.</li>
+          <li>Managed the club's budget to ensure sufficient funding for all future club activities and events.</li>
+          <li>Led and coordinated teammates to ensure all fundraising initiatives were carried out effectively and without conflict within the duration set by the club president.</li>
         </ul>
       </div>
-      <div class="ex-tags"><span class="etag">Fundraising</span><span class="etag">Finance</span></div>
+      <div class="ex-tags"><span class="etag">Fundraising</span><span class="etag">Finance</span><span class="etag">Leadership</span></div>
     </div>
     <div class="ex-item rv" style="transition-delay:.24s">
       <div class="ex-period">Ongoing</div>
@@ -469,7 +472,7 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
         <div class="ex-title">Web &amp; Technical Developer</div>
         <div class="ex-co">Scholarshipinfomy</div>
         <ul class="ex-bullets">
-          <li>Developing and maintaining web content for a scholarship information platform</li>
+          <li>Maintaining web content for a scholarship information platform</li>
           <li>Providing technical support and web updates for the platform's users</li>
         </ul>
       </div>
@@ -484,9 +487,6 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
   <div class="proj-filters rv" style="transition-delay:.14s">
     <button class="pf on" data-f="all">All</button>
     <button class="pf" data-f="web">Web Dev</button>
-    <button class="pf" data-f="data">Data &amp; DB</button>
-    <button class="pf" data-f="qa">QA / Testing</button>
-    <button class="pf" data-f="iot">IoT</button>
     <button class="pf" data-f="mobile">Mobile</button>
   </div>
   <div class="proj-grid">
@@ -518,7 +518,19 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
       </div>
     </div>
     <div class="pcard rv" data-cat="mobile" style="transition-delay:.1s">
-      <img src="images/jomjalan.png" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;" alt="JomJalan Project"/>
+    <div onclick="document.getElementById('jomjalan-modal').style.display='flex'" style="width:100%;aspect-ratio:16/9;position:relative;cursor:pointer;overflow:hidden;">
+      <img src="images/jomjalan.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="JomJalan Project"/>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);">
+       <div style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;">
+         <div style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:18px solid #111;margin-left:4px;"></div>
+       </div>
+      </div>
+    </div>
+
+   <div id="jomjalan-modal" onclick="this.style.display='none';this.querySelector('video').pause()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;">
+     <button onclick="event.stopPropagation();document.getElementById('jomjalan-modal').style.display='none';document.getElementById('jomjalan-modal').querySelector('video').pause()" style="position:fixed;top:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;">✕</button>
+     <video src="videos/jomjalan.mp4" controls playsinline style="max-width:90vw;max-height:85vh;border-radius:6px;" onclick="event.stopPropagation()"></video>
+   </div>
       <div class="p-body">
         <div class="p-type">Mobile App · Nov 2024</div>
         <div class="p-name">JomJalan — Step Tracker</div>
@@ -566,11 +578,11 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
   
     <div class="acard rv" style="transition-delay:.06s">
       <img src="images/innovex.png" style="width:100%;aspect-ratio:16/9;object-fit:contain;display:block;background:var(--soft);" alt="innovex Project"/>
-      <div class="acard-body"><span class="ab-badge ab-gold">Gold Award</span><div class="ac-title">Gold Award — Innovex 2024</div><div class="ac-org">International Innovation Exhibition · 2024</div><div class="ac-desc">Received the Gold Award at Innovex 2024 for an innovative project demonstrating excellence in applied technology at the international level.</div></div>
+      <div class="acard-body"><span class="ab-badge ab-gold">Gold Award</span><div class="ac-title">Gold Award — Innovex 2024</div><div class="ac-desc">Received the Gold Award at Innovex 2024 for the maKan project, a student food ordering web platform, demonstrating excellence in applied technology at the international level.</div></div>
     </div>
     <div class="acard rv" style="transition-delay:.12s">
       <img src="images/ice.png" style="width:100%;aspect-ratio:16/9;object-fit:contain;display:block;background:var(--soft);" alt="ice Project"/>
-      <div class="acard-body"><span class="ab-badge ab-silver">Silver Award</span><div class="ac-title">Silver Award — ICE-CInno 2024</div><div class="ac-org">International Competition on Computing Innovation · 2024</div><div class="ac-desc">Awarded Silver at this international computing innovation competition, recognising outstanding contributions among participants from multiple countries.</div></div>
+      <div class="acard-body"><span class="ab-badge ab-silver">Silver Award</span><div class="ac-title">Silver Award — ICE-CInno 2024</div><div class="ac-desc">Awarded Silver at this international computing innovation competition for the NGODAR project, a catering and events booking platform, competing among participants from multiple countries.</div></div>
     </div>
     
     <div class="acard rv" style="transition-delay:.12s">
@@ -603,9 +615,10 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
       <div class="vcard-body">
         <div>
           <div class="vc-date">2025</div>
-          <div class="vc-title">Program Rakan Prihatin: Give Back Rakan Muda</div>
-          <div class="vc-org">District of Petaling, Selangor</div>
-          <div class="vc-desc">Participated as a volunteer in Program Rakan Prihatin, contributing to community outreach activities supporting underprivileged youth in the District of Petaling. Assisted in organising programmes, distributing resources, and engaging directly with the community to foster care and solidarity.</div>
+          <div class="vc-title">Program Rakan Prihatin Give Back Rakan Muda</div>
+          <div class="vc-org">Charisma Movement</div>
+          <div class="vc-desc">Participated as a volunteer in Program Rakan Prihatin, contributing to community outreach activities supporting underprivileged children in the District of Petaling.</div>
+          <div class="vc-desc" style="margin-top:.6rem">Served as an activity station coordinator at Rumah Kasih Harmoni Paya Jaras, Sungai Buloh, where my teammate and I demonstrated a magic trick to the children. We showed them how to write hidden messages on paper that only appear once a mixture of alcohol and vinegar is applied, combining fun with basic science education.</div>
         </div>
         <span class="vc-tag">Community Outreach</span>
       </div>
@@ -617,14 +630,14 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
       <div class="vcard-body">
         <div>
           <div class="vc-date">Ongoing</div>
-          <div class="vc-title">Volunteer Tutor — Education Recovery Tutoring Initiative</div>
-          <div class="vc-org">ERTI · Teach For Malaysia</div>
-          <div class="vc-desc">Serving as a volunteer tutor under Teach For Malaysia's ERTI programme, providing academic support to students whose education was disrupted. Delivering tutoring sessions to help learners rebuild foundational skills and regain confidence — directly embodying my commitment to youth empowerment and equal opportunity.</div>
+          <div class="vc-title">Volunteer Tutor Education Recovery Tutoring Initiative</div>
+          <div class="vc-org">Teach For Malaysia</div>
+          <div class="vc-desc">Taught students by building prerequisite understanding of Mathematics topics before advancing to high level questions, ensuring a strong foundation so students do not lose motivation due to weak conceptual understanding.</div>
+          <div class="vc-desc" style="margin-top:.6rem">Also volunteered as a substitute teacher for a Level 1 English class, using game learning techniques to teach names of Malaysian food in English to gain students attention. Utilised the Frog platform as a resource tool for English teaching materials.</div>
         </div>
         <span class="vc-tag">Education · Youth Empowerment</span>
       </div>
     </div>
-  </div>
 </section>
 
 <section id="skills">
@@ -704,20 +717,12 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
 
 <footer>
   <span class="ft">© 2026 Nur Sofia Balqis Binti Rospi</span>
-  <span class="ft">My Portfolio ·</span>
+  <span class="ft">Portfolio ·</span>
 </footer>
 
 <script>
 window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('gone'),1700));
 
-const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=(mx-4)+'px';cur.style.top=(my-4)+'px'});
-(function lp(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(lp)})();
-document.querySelectorAll('a,button,.pcard,.acard,.vcard,.vrow,.chip').forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
-});
 
 const nav=document.getElementById('nav');
 const secs=[...document.querySelectorAll('section[id]')];
@@ -787,7 +792,7 @@ function prevVol(input,wrapId){
   r.readAsDataURL(file);
 }
 
-const phrases=['Computer Science Graduate · CGPA 3.80','My Portfolio · 2026','Web Developer · QA Tester · DB Architect','Kuantan, Pahang, Malaysia'];
+const phrases=['Computer Science Graduate · CGPA 3.80','Portfolio · 2026','Web Developer · QA Tester ·','Kuantan, Pahang, Malaysia'];
 let pi=0,ci=0,del=false;
 const typed=document.getElementById('typed');
 function type(){
