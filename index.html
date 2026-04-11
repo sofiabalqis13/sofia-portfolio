@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Nur Sofia Balqis — My Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&family=Courier+Prime&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --white:#fafaf7;
+  --ink:#111110;
+  --soft:#f0ede6;
+  --mid:#e0ddd6;
+  --muted:#888884;
+  --accent:#2d6a4f;
+  --accent2:#1a4a37;
+  --border:rgba(17,17,16,.09);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',sans-serif;
+  --mono:'Courier Prime',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--ink);font-family:var(--sans);overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#cur{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--ink);pointer-events:none;z-index:9999;transition:width .3s,height .3s,background .3s,transform .2s}
+#cur-ring{position:fixed;width:32px;height:32px;border-radius:50%;border:1px solid rgba(17,17,16,.3);pointer-events:none;z-index:9998;transition:width .3s,height .3s,border-color .3s,left .12s ease,top .12s ease;transform:translate(-50%,-50%)}
+body.hov #cur{transform:scale(0)}
+body.hov #cur-ring{width:52px;height:52px;border-color:var(--accent)}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:var(--ink);z-index:1000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.5rem;transition:opacity .7s,visibility .7s}
+#loader.gone{opacity:0;visibility:hidden;pointer-events:none}
+.ld-name{font-family:var(--serif);font-size:2.2rem;font-weight:300;color:var(--white);letter-spacing:.1em;opacity:0;animation:fup .6s ease .2s forwards}
+.ld-sub{font-family:var(--mono);font-size:.65rem;color:rgba(255,255,255,.35);letter-spacing:.18em;text-transform:uppercase;opacity:0;animation:fup .6s ease .4s forwards}
+.ld-bar{width:180px;height:1px;background:rgba(255,255,255,.15);margin-top:.5rem}
+.ld-fill{height:100%;background:var(--white);width:0;animation:ldgo 1.5s ease forwards}
+@keyframes ldgo{to{width:100%}}
+@keyframes fup{to{opacity:1;transform:none}}
+
+/* PROGRESS */
+#pgbar{position:fixed;top:0;left:0;height:1px;background:var(--accent);z-index:500;width:0;transition:width .08s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:2rem 4rem;transition:padding .4s,background .4s,border-bottom .4s}
+nav.compact{padding:1.1rem 4rem;background:rgba(250,250,247,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--serif);font-size:1.05rem;font-weight:400;text-decoration:none;color:var(--ink);letter-spacing:.03em}
+.nav-logo em{font-style:italic;color:var(--muted)}
+.nav-mid{display:flex;gap:2rem;list-style:none}
+.nav-mid a{font-size:.68rem;font-weight:400;text-decoration:none;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;transition:color .2s;white-space:nowrap}
+.nav-mid a:hover,.nav-mid a.on{color:var(--ink)}
+.nav-cta{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--white);background:var(--ink);padding:.5rem 1.3rem;border-radius:2rem;transition:all .25s;font-weight:400;white-space:nowrap}
+.nav-cta:hover{background:var(--accent)}
+
+/* HERO */
+#hero{min-height:100vh;display:grid;grid-template-rows:1fr auto;padding:0 4rem 4rem;position:relative;overflow:hidden}
+.hero-main{display:flex;flex-direction:column;justify-content:flex-end;padding-top:8rem;padding-bottom:3rem}
+.hero-tag{display:flex;align-items:center;gap:.8rem;font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.1em;margin-bottom:2.2rem;opacity:0;animation:fup .6s ease .3s forwards}
+.tag-dash{width:28px;height:1px;background:var(--muted)}
+.blink{animation:blink 1s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-name{font-family:var(--serif);font-size:clamp(4rem,10.5vw,9.5rem);font-weight:300;line-height:.92;letter-spacing:-.025em;opacity:0;animation:fup .8s ease .35s forwards}
+.hn-plain{display:block;color:var(--ink)}
+.hn-mid{display:block;color:var(--ink)}
+.hn-green{display:block;color:var(--accent)}
+
+/* HERO BOTTOM — centered stats only */
+.hero-bottom{display:flex;justify-content:center;align-items:center;gap:6rem;border-top:1px solid var(--border);padding-top:3rem;opacity:0;animation:fup .7s ease .55s forwards}
+.hstat{display:flex;flex-direction:column;align-items:center;gap:.4rem}
+.hstat-n{font-family:var(--serif);font-size:clamp(3.5rem,6vw,5.5rem);font-weight:300;color:var(--accent);line-height:1;letter-spacing:-.02em}
+.hstat-l{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.18em;text-transform:uppercase}
+.hstat-div{width:1px;height:60px;background:var(--border)}
+
+/* MARQUEE */
+.mwrap{overflow:hidden;white-space:nowrap;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.65rem 0}
+.mtrack{display:inline-flex;gap:2.5rem;animation:mq 24s linear infinite}
+.mtrack:hover{animation-play-state:paused}
+.mitem{font-family:var(--serif);font-size:1.05rem;font-style:italic;color:var(--muted);font-weight:300;flex-shrink:0}
+.msep{color:var(--mid)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* SECTIONS SHARED */
+section:not(#hero){padding:7rem 4rem}
+.sec-eyebrow{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;margin-bottom:.7rem;display:flex;align-items:center;gap:.7rem}
+.sec-eyebrow::before{content:'';width:24px;height:1px;background:var(--muted)}
+.sec-h{font-family:var(--serif);font-size:clamp(2.4rem,4.5vw,3.8rem);font-weight:300;line-height:1.1;letter-spacing:-.025em;margin-bottom:3.5rem}
+.sec-h em{font-style:italic;color:var(--accent)}
+
+/* ABOUT */
+#about{background:var(--white)}
+.ab-grid{display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:start}
+.ab-quote{font-family:var(--serif);font-size:1.2rem;font-style:italic;font-weight:300;color:var(--ink);line-height:1.65;padding-left:1.4rem;border-left:1.5px solid var(--accent);margin:2.2rem 0}
+.ab-body{font-size:.88rem;font-weight:300;line-height:1.92;color:var(--muted);margin-bottom:1.5rem}
+.edu-block{margin-top:2.5rem;padding:1.6rem;background:var(--soft);border-radius:4px}
+.edu-label{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:1rem}
+.edu-item{display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--border)}
+.edu-item:last-child{border-bottom:none}
+.edu-name{font-size:.85rem;font-weight:500}
+.edu-inst{font-size:.76rem;color:var(--muted);margin-top:.15rem;font-weight:300}
+.edu-right{text-align:right;flex-shrink:0}
+.edu-gpa{font-family:var(--mono);font-size:.8rem;color:var(--accent);font-weight:500}
+.edu-year{font-family:var(--mono);font-size:.62rem;color:var(--muted)}
+.val-list{display:flex;flex-direction:column}
+.vrow{display:flex;gap:1.2rem;align-items:flex-start;padding:1.2rem 0;border-bottom:1px solid var(--border);transition:padding-left .3s}
+.vrow:hover{padding-left:.5rem}
+.vrow:first-child{border-top:1px solid var(--border)}
+.v-num{font-family:var(--mono);font-size:.6rem;color:var(--muted);flex-shrink:0;padding-top:.18rem}
+.v-title{font-size:.87rem;font-weight:500;margin-bottom:.18rem}
+.v-desc{font-size:.76rem;color:var(--muted);font-weight:300;line-height:1.6}
+
+/* EXPERIENCE */
+#experience{background:var(--ink);color:var(--white)}
+#experience .sec-eyebrow::before{background:rgba(255,255,255,.25)}
+#experience .sec-h{color:var(--white)}
+#experience .sec-h em{color:rgba(255,255,255,.38)}
+.ex-list{display:flex;flex-direction:column}
+.ex-item{display:grid;grid-template-columns:140px 1fr auto;gap:3rem;padding:2.2rem 0;border-bottom:1px solid rgba(255,255,255,.07);transition:background .3s}
+.ex-item:last-child{border-bottom:none}
+.ex-period{font-family:var(--mono);font-size:.65rem;color:rgba(255,255,255,.3);letter-spacing:.07em;text-transform:uppercase;padding-top:.15rem;line-height:1.7}
+.ex-body .ex-title{font-family:var(--serif);font-size:1.35rem;font-weight:400;letter-spacing:-.01em;margin-bottom:.2rem;color:var(--white)}
+.ex-co{font-size:.76rem;color:rgba(255,255,255,.38);font-weight:300;margin-bottom:.9rem}
+.ex-type{display:inline-block;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .65rem;border:1px solid rgba(255,255,255,.15);border-radius:2rem;color:rgba(255,255,255,.35);margin-bottom:.9rem}
+.ex-bullets{list-style:none;display:flex;flex-direction:column;gap:.42rem}
+.ex-bullets li{font-size:.79rem;color:rgba(255,255,255,.45);font-weight:300;display:flex;gap:.6rem;line-height:1.58}
+.ex-bullets li::before{content:'—';color:rgba(255,255,255,.2);flex-shrink:0}
+.ex-tags{display:flex;flex-direction:column;align-items:flex-end;gap:.4rem;padding-top:.15rem}
+.etag{font-family:var(--mono);font-size:.6rem;letter-spacing:.07em;padding:.25rem .65rem;border:1px solid rgba(255,255,255,.1);border-radius:2rem;color:rgba(255,255,255,.35);white-space:nowrap}
+
+/* PROJECTS */
+#projects{background:var(--soft)}
+.proj-filters{display:flex;gap:.45rem;margin-bottom:3rem;flex-wrap:wrap}
+.pf{font-size:.63rem;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:.32rem .85rem;border:1px solid var(--border);border-radius:2rem;background:transparent;color:var(--muted);cursor:none;transition:all .22s}
+.pf.on,.pf:hover{background:var(--ink);color:var(--white);border-color:var(--ink)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.pcard{background:var(--white);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;transition:transform .35s,box-shadow .35s;cursor:none}
+.pcard:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(17,17,16,.1)}
+.pcard.hide{opacity:0;pointer-events:none;transform:scale(.96)}
+.p-img-upload{width:100%;aspect-ratio:16/9;background:var(--soft);border-bottom:1.5px dashed var(--mid);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.5rem;cursor:pointer;transition:border-color .2s,background .2s;position:relative}
+.p-img-upload:hover{border-color:var(--accent);background:rgba(45,106,79,.04)}
+.p-img-upload input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.p-img-upload span{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;pointer-events:none}
+.p-img-upload .pui{font-size:1.4rem;opacity:.3;pointer-events:none}
+.p-img-actual{width:100%;aspect-ratio:16/9;object-fit:cover;display:none}
+.p-body{padding:1.5rem;flex:1;display:flex;flex-direction:column;gap:.8rem}
+.p-type{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.14em;color:var(--accent)}
+.p-name{font-family:var(--serif);font-size:1.25rem;font-weight:400;letter-spacing:-.01em;line-height:1.2;color:var(--ink)}
+.p-desc{font-size:.78rem;font-weight:300;line-height:1.7;color:var(--muted);flex:1}
+.p-tags{display:flex;flex-wrap:wrap;gap:.35rem}
+.ptag{font-size:.58rem;font-family:var(--mono);letter-spacing:.06em;padding:.18rem .5rem;background:var(--soft);border-radius:2px;color:var(--muted)}
+.p-links{display:flex;gap:.7rem;padding-top:.8rem;border-top:1px solid var(--border);margin-top:auto}
+.p-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-family:var(--mono);letter-spacing:.06em;text-decoration:none;color:var(--muted);border:1px solid var(--border);padding:.3rem .75rem;border-radius:2rem;transition:all .22s;text-transform:uppercase}
+.p-link.gh:hover{border-color:var(--ink);background:var(--ink);color:var(--white)}
+.p-link.live:hover{border-color:var(--accent);background:var(--accent);color:var(--white)}
+
+/* AWARDS */
+#awards{background:var(--white)}
+.aw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.acard{border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:box-shadow .3s,transform .3s;cursor:none}
+.acard:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(17,17,16,.08)}
+.acard-img-wrap{width:100%;aspect-ratio:4/3;position:relative;overflow:hidden;background:var(--soft)}
+.acard-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.acard-upload{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;cursor:pointer;transition:background .2s;background:var(--soft)}
+.acard-upload input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.acard-upload .aui{font-size:1.6rem;opacity:.3;pointer-events:none}
+.acard-upload span{font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;pointer-events:none}
+.acard-upload:hover{background:rgba(45,106,79,.06)}
+.acard-body{padding:1.4rem}
+.ab-badge{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.09em;padding:.22rem .65rem;border-radius:2rem;margin-bottom:.75rem}
+.ab-gold{background:#fdf3de;color:#8a6200;border:1px solid #e8d090}
+.ab-silver{background:#f0f0ed;color:#555551;border:1px solid #d0d0cb}
+.ab-special{background:#e6f2ec;color:var(--accent2);border:1px solid #b5d9c5}
+.ac-title{font-family:var(--serif);font-size:1.05rem;font-weight:400;letter-spacing:-.01em;line-height:1.3;margin-bottom:.4rem;color:var(--ink)}
+.ac-org{font-size:.74rem;color:var(--muted);font-weight:300;margin-bottom:.6rem}
+.ac-desc{font-size:.76rem;color:var(--muted);font-weight:300;line-height:1.65}
+
+/* VOLUNTEERING */
+#volunteering{background:var(--soft)}
+.vol-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.vcard{background:var(--white);border-radius:6px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;transition:box-shadow .3s,transform .3s;cursor:none}
+.vcard:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(17,17,16,.08)}
+.vcard-img-side{position:relative;overflow:hidden;background:var(--mid);min-height:220px}
+.vcard-img-side img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
+.vcard-upload{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;cursor:pointer;transition:background .2s;background:var(--soft)}
+.vcard-upload input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.vcard-upload .vui{font-size:1.8rem;opacity:.28;pointer-events:none}
+.vcard-upload span{font-family:var(--mono);font-size:.55rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;pointer-events:none}
+.vcard-upload:hover{background:rgba(45,106,79,.07)}
+.vcard-body{padding:1.8rem;display:flex;flex-direction:column;justify-content:space-between}
+.vc-date{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem}
+.vc-title{font-family:var(--serif);font-size:1.1rem;font-weight:400;letter-spacing:-.01em;line-height:1.25;margin-bottom:.3rem;color:var(--ink)}
+.vc-org{font-size:.74rem;color:var(--accent);font-weight:500;margin-bottom:.8rem}
+.vc-desc{font-size:.77rem;color:var(--muted);font-weight:300;line-height:1.68}
+.vc-tag{display:inline-block;margin-top:1rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.09em;padding:.2rem .6rem;border:1px solid var(--border);border-radius:2rem;color:var(--muted)}
+
+/* SKILLS */
+#skills{background:var(--ink);color:var(--white)}
+#skills .sec-eyebrow::before{background:rgba(255,255,255,.25)}
+#skills .sec-h{color:var(--white)}
+#skills .sec-h em{color:rgba(255,255,255,.35)}
+.sk-cols{display:grid;grid-template-columns:1fr 1fr;gap:8rem}
+.sk-group{margin-bottom:3rem}
+.sk-glabel{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.3);margin-bottom:1.2rem;display:flex;align-items:center;gap:.7rem}
+.sk-glabel::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
+.sk-bars{display:flex;flex-direction:column;gap:.95rem}
+.sk-row{display:flex;flex-direction:column;gap:.32rem}
+.sk-top{display:flex;justify-content:space-between;font-size:.8rem;color:rgba(255,255,255,.7);font-weight:300}
+.sk-pct{font-family:var(--mono);font-size:.68rem;color:rgba(255,255,255,.35)}
+.sk-track{height:1px;background:rgba(255,255,255,.08)}
+.sk-fill{height:100%;background:var(--accent);width:0;transition:width 1.5s cubic-bezier(.16,1,.3,1)}
+.chip-cloud{display:flex;flex-wrap:wrap;gap:.45rem}
+.chip{font-size:.68rem;font-family:var(--mono);padding:.3rem .78rem;border:1px solid rgba(255,255,255,.1);border-radius:2rem;color:rgba(255,255,255,.4);transition:all .22s;cursor:default}
+.chip:hover{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.8)}
+.soft-skills{display:grid;grid-template-columns:1fr 1fr;gap:.5rem .8rem;margin-top:.5rem}
+.soft-item{display:flex;align-items:center;gap:.5rem;font-size:.76rem;color:rgba(255,255,255,.45);font-weight:300}
+.soft-item::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
+
+/* CONTACT */
+#contact{padding:9rem 4rem;background:var(--white)}
+.ct-inner{max-width:860px}
+.ct-h{font-family:var(--serif);font-size:clamp(3rem,7vw,6.5rem);font-weight:300;line-height:.92;letter-spacing:-.03em;margin-bottom:1.5rem}
+.ct-h em{font-style:italic;color:var(--muted)}
+.ct-sub{font-size:.88rem;color:var(--muted);font-weight:300;max-width:420px;line-height:1.85;margin-bottom:4rem}
+.ct-links{display:flex;gap:3rem;flex-wrap:wrap;padding-top:2.5rem;border-top:1px solid var(--border)}
+.ct-link{display:flex;flex-direction:column;gap:.4rem;text-decoration:none;color:var(--ink);transition:opacity .2s}
+.ct-link:hover{opacity:.5}
+.ctl-label{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.ctl-val{font-size:.88rem;font-weight:400;border-bottom:1px solid var(--border);padding-bottom:.35rem}
+
+footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.ft{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.06em}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
+.rv.vis{opacity:1;transform:none}
+.rv-l{opacity:0;transform:translateX(-22px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
+.rv-l.vis{opacity:1;transform:none}
+.rv-r{opacity:0;transform:translateX(22px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
+.rv-r.vis{opacity:1;transform:none}
+
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+/* HERO PHOTO */
+#hero-photo{position:absolute;right:4rem;top:50%;transform:translateY(-50%);width:clamp(220px,22vw,320px);aspect-ratio:3/4;object-fit:cover;object-position:top;border-radius:4px;opacity:.92;pointer-events:none}
+@media(max-width:960px){
+  nav,nav.compact{padding:1rem 1.5rem}
+  #hero{padding:0 1.5rem 3rem}
+  .hero-bottom{gap:2.5rem}
+  .hstat-n{font-size:3rem}
+  .hstat-div{height:40px}
+  section:not(#hero){padding:5rem 1.5rem}
+  .ab-grid,.sk-cols{grid-template-columns:1fr;gap:3rem}
+  .ex-item{grid-template-columns:1fr;gap:.6rem}
+  .ex-tags{align-items:flex-start}
+  .proj-grid,.aw-grid{grid-template-columns:1fr 1fr}
+  .vol-grid{grid-template-columns:1fr}
+  .vcard{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:.5rem;text-align:center}
+  .nav-mid{gap:1rem}
+  #hero-photo{display:none}
+}
+@media(max-width:640px){
+  .proj-grid,.aw-grid{grid-template-columns:1fr}
+  .hero-bottom{gap:1.5rem}
+  .hstat-div{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="ld-name">Nur Sofia Balqis</div>
+  <div class="ld-sub">My Portfolio</div>
+  <div class="ld-bar"><div class="ld-fill"></div></div>
+</div>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<div id="pgbar"></div>
+
+<nav id="nav">
+  <a class="nav-logo" href="#">My <em>Portfolio</em></a>
+  <ul class="nav-mid">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#volunteering">Volunteer</a></li>
+    <li><a href="#skills">Skills</a></li>
+  </ul>
+  <a></a>
+</nav>
+
+<section id="hero">
+  <div class="hero-main">
+    <div class="hero-tag">
+      <span class="tag-dash"></span>
+      <span id="typed"></span><span class="blink">|</span>
+    </div>
+    <h1 class="hero-name">
+      <span class="hn-plain">Nur</span>
+      <span class="hn-mid">Sofia Balqis</span>
+      <span class="hn-green">Binti Rospi</span>
+    </h1>
+  </div>
+  <!-- ONLY ADDITION: photo beside the name -->
+  <img id="hero-photo" src="images/gambarpassport2.jpeg" alt="Nur Sofia Balqis"/>
+  <div class="hero-bottom">
+    <div class="hstat">
+      <span class="hstat-n" data-n="3.80" data-d="2">0</span>
+      <span class="hstat-l">CGPA</span>
+    </div>
+    <div class="hstat-div"></div>
+    <div class="hstat">
+      <span class="hstat-n" data-n="9" data-plus="1">0</span>
+      <span class="hstat-l">Projects</span>
+    </div>
+    <div class="hstat-div"></div>
+    <div class="hstat">
+      <span class="hstat-n" data-n="8" data-plus="1">0</span>
+      <span class="hstat-l">Awards</span>
+    </div>
+  </div>
+</section>
+
+<div class="mwrap">
+  <div class="mtrack">
+    <span class="mitem">Web Development</span><span class="msep">✦</span>
+    <span class="mitem">Test Automation</span><span class="msep">✦</span>
+    <span class="mitem">Database Design</span><span class="msep">✦</span>
+    <span class="mitem">Data Analytics</span><span class="msep">✦</span>
+    <span class="mitem">IoT Systems</span><span class="msep">✦</span>
+    <span class="mitem">Mobile Apps</span><span class="msep">✦</span>
+    <span class="mitem">QA Engineering</span><span class="msep">✦</span>
+    <span class="mitem">Youth Empowerment</span><span class="msep">✦</span>
+    <span class="mitem">Community Service</span><span class="msep">✦</span>
+    <span class="mitem">Web Development</span><span class="msep">✦</span>
+    <span class="mitem">Test Automation</span><span class="msep">✦</span>
+    <span class="mitem">Database Design</span><span class="msep">✦</span>
+    <span class="mitem">Data Analytics</span><span class="msep">✦</span>
+    <span class="mitem">IoT Systems</span><span class="msep">✦</span>
+    <span class="mitem">Mobile Apps</span><span class="msep">✦</span>
+    <span class="mitem">QA Engineering</span><span class="msep">✦</span>
+    <span class="mitem">Youth Empowerment</span><span class="msep">✦</span>
+    <span class="mitem">Community Service</span><span class="msep">✦</span>
+  </div>
+</div>
+
+<section id="about">
+  <div class="ab-grid">
+    <div>
+      <div class="sec-eyebrow rv">01 — About</div>
+      <h2 class="sec-h rv" style="transition-delay:.08s">Who I <em>am</em></h2>
+      <div class="ab-quote rv" style="transition-delay:.14s">"Adaptable, responsible, and eager to continue learning through scholarship opportunities to support future studies and make a positive impact in society."</div>
+      <p class="ab-body rv" style="transition-delay:.18s">I am Nur Sofia Balqis Binti Rospi, a Computer Science Diploma graduate from Kolej Profesional MARA Indera Mahkota, Pahang, with a CGPA of 3.80. I am experienced in web development, test automation, and database management, and I am deeply passionate about applying technology to create meaningful change in communities.</p>
+      <p class="ab-body rv" style="transition-delay:.22s">During my internship at IDS Medical Systems, I gained hands-on experience in software quality assurance, executing automation tests on real medical systems. Beyond academics, I actively contribute as a volunteer tutor, college secretariat, and community programme participant — reflecting my commitment to leadership, teamwork, and social responsibility.</p>
+      <div class="edu-block rv" style="transition-delay:.28s">
+        <div class="edu-label">Education</div>
+        <div class="edu-item">
+          <div>
+            <div class="edu-name">Diploma in Computer Science</div>
+            <div class="edu-inst">Kolej Profesional MARA Indera Mahkota · Pahang, Malaysia</div>
+          </div>
+          <div class="edu-right">
+            <div class="edu-gpa">CGPA 3.80</div>
+            <div class="edu-year">2023 – 2025</div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div>
+            <div class="edu-name">Sijil Pelajaran Malaysia (SPM)</div>
+            <div class="edu-inst">SMK Abdul Rahman Talib · Kuantan, Pahang</div>
+          </div>
+          <div class="edu-right">
+            <div class="edu-gpa">3A+ 2A- 1A 2B+ 1C+</div>
+            <div class="edu-year">2018 – 2022</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 class="sec-h rv-r" style="margin-bottom:2rem">My core <em>values</em></h2>
+      <div class="val-list">
+        <div class="vrow rv-r" style="transition-delay:.1s"><span class="v-num">02</span><div><div class="v-title">Youth Empowerment</div><div class="v-desc">Active volunteer tutor with Teach For Malaysia's ERTI programme, helping students recover and thrive academically.</div></div></div>
+        <div class="vrow rv-r" style="transition-delay:.15s"><span class="v-num">03</span><div><div class="v-title">Community Service</div><div class="v-desc">Participant in Program Rakan Prihatin and residential college leadership roles serving peers and the wider community.</div></div></div>
+        <div class="vrow rv-r" style="transition-delay:.2s"><span class="v-num">04</span><div><div class="v-title">Lifelong Learning</div><div class="v-desc">Committed to continuous growth through scholarship opportunities, academic excellence, and cross-disciplinary curiosity.</div></div></div>
+        <div class="vrow rv-r" style="transition-delay:.25s"><span class="v-num">05</span><div><div class="v-title">Innovation &amp; Problem-Solving</div><div class="v-desc">Gold and Silver award winner at international exhibitions — bringing creative, evidence-based solutions to real-world challenges.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="sec-eyebrow rv">02 — Experience &amp; Leadership</div>
+  <h2 class="sec-h rv" style="transition-delay:.08s">Where I've <em>contributed</em></h2>
+  <div class="ex-list">
+    <div class="ex-item rv">
+      <div class="ex-period">Aug 2025<br>– Oct 2025</div>
+      <div class="ex-body">
+        <span class="ex-type">Internship</span>
+        <div class="ex-title">Automation Software Tester</div>
+        <div class="ex-co">IDS Medical Systems (M) Sdn Bhd · Shah Alam, Selangor</div>
+        <ul class="ex-bullets">
+          <li>Executed test automation using Katalon Studio on Flutter and Angular-based medical systems</li>
+          <li>Captured UI elements through recording and manual scripting techniques</li>
+          <li>Identified and resolved issues in automation scripts to ensure system accuracy</li>
+          <li>Assisted in creating regression and functional test cases and scripts</li>
+          <li>Gained solid understanding of the software QA lifecycle and best practices</li>
+        </ul>
+      </div>
+      <div class="ex-tags"><span class="etag">Katalon Studio</span><span class="etag">Flutter</span><span class="etag">Angular</span><span class="etag">QA</span></div>
+    </div>
+    <div class="ex-item rv" style="transition-delay:.08s">
+      <div class="ex-period">2026<br>– Present</div>
+      <div class="ex-body">
+        <span class="ex-type">Volunteer</span>
+        <div class="ex-title">Data Analytics Officer</div>
+        <div class="ex-co">Charisma Movement</div>
+        <ul class="ex-bullets">
+          <li>Analysing organisational data to support movement decisions and programme tracking</li>
+          <li>Building visual reports and dashboards for leadership review</li>
+        </ul>
+      </div>
+      <div class="ex-tags"><span class="etag">Analytics</span><span class="etag">Reporting</span></div>
+    </div>
+    <div class="ex-item rv" style="transition-delay:.12s">
+      <div class="ex-period">2026<br>– Present</div>
+      <div class="ex-body">
+        <span class="ex-type">Volunteer</span>
+        <div class="ex-title">Technical Officer</div>
+        <div class="ex-co">The STEM Bulletin</div>
+        <ul class="ex-bullets">
+          <li>Managing technical infrastructure and digital publishing pipeline for STEM content</li>
+          <li>Supporting editorial teams with web tools, platform setup, and digital workflows</li>
+        </ul>
+      </div>
+      <div class="ex-tags"><span class="etag">Web</span><span class="etag">Publishing</span></div>
+    </div>
+    <div class="ex-item rv" style="transition-delay:.16s">
+      <div class="ex-period">2024<br>– 2025</div>
+      <div class="ex-body">
+        <span class="ex-type">Leadership</span>
+        <div class="ex-title">Residential College Secretariat</div>
+        <div class="ex-co">Kolej Profesional MARA Indera Mahkota</div>
+        <ul class="ex-bullets">
+          <li>Coordinated residential college activities and administrative responsibilities for students</li>
+          <li>Liaised between student body and college management to address welfare and programme needs</li>
+        </ul>
+      </div>
+      <div class="ex-tags"><span class="etag">Leadership</span><span class="etag">Administration</span></div>
+    </div>
+    <div class="ex-item rv" style="transition-delay:.2s">
+      <div class="ex-period">2024<br>– 2025</div>
+      <div class="ex-body">
+        <span class="ex-type">Leadership</span>
+        <div class="ex-title">Head of Funds Exco</div>
+        <div class="ex-co">Peer Guidance Club · Kolej Profesional MARA Indera Mahkota</div>
+        <ul class="ex-bullets">
+          <li>Led the fundraising committee, planning and executing fund collection activities</li>
+          <li>Managed budget allocation and financial reporting for club events and initiatives</li>
+        </ul>
+      </div>
+      <div class="ex-tags"><span class="etag">Fundraising</span><span class="etag">Finance</span></div>
+    </div>
+    <div class="ex-item rv" style="transition-delay:.24s">
+      <div class="ex-period">Ongoing</div>
+      <div class="ex-body">
+        <span class="ex-type">Volunteer</span>
+        <div class="ex-title">Web &amp; Technical Developer</div>
+        <div class="ex-co">Scholarshipinfomy</div>
+        <ul class="ex-bullets">
+          <li>Developing and maintaining web content for a scholarship information platform</li>
+          <li>Providing technical support and web updates for the platform's users</li>
+        </ul>
+      </div>
+      <div class="ex-tags"><span class="etag">Web Dev</span><span class="etag">Content</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="sec-eyebrow rv">03 — Academic Projects</div>
+  <h2 class="sec-h rv" style="transition-delay:.08s">Selected <em>work</em></h2>
+  <div class="proj-filters rv" style="transition-delay:.14s">
+    <button class="pf on" data-f="all">All</button>
+    <button class="pf" data-f="web">Web Dev</button>
+    <button class="pf" data-f="data">Data &amp; DB</button>
+    <button class="pf" data-f="qa">QA / Testing</button>
+    <button class="pf" data-f="iot">IoT</button>
+    <button class="pf" data-f="mobile">Mobile</button>
+  </div>
+  <div class="proj-grid">
+    <div class="pcard rv" data-cat="web" style="transition-delay:.05s">
+      <img src="images/disciplinary.png" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;" alt="disciplinary Project"/>
+      <div class="p-body">
+        <div class="p-type">Full Stack · Sep – Oct 2024</div>
+        <div class="p-name">KPMIM Student Disciplinary System</div>
+        <div class="p-desc">Developed a web-based disciplinary management system for college use using Django, Python, and SQLite. Features role-based access for admins (JDK Supervisors) and students with dedicated dashboards, case tracking workflow (Pending / Under Review / Resolved), and automated monthly report generation.</div>
+        <div class="p-desc">Username: admin, Password: admin</div>
+        <div class="p-tags"><span class="ptag">Django</span><span class="ptag">Python</span><span class="ptag">JavaScript</span><span class="ptag">SQLite</span></div>
+        <div class="p-links">
+          <a href="https://github.com/sofiabalqis13/Student-Disciplinary-System.git" target="_blank" class="p-link gh">⌥ GitHub</a>
+          <a href="https://sofia14.pythonanywhere.com/" target="_blank" class="p-link live">↗ Live Demo</a>
+        </div>
+      </div>
+    </div>
+    <div class="pcard rv" data-cat="web" style="transition-delay:.05s">
+      <img src="images/ngodarpicture.png" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;" alt="NGODAR Project"/>
+      <div class="p-body">
+        <div class="p-type">Front-End Development · Dec 2024 – Jan 2025</div>
+        <div class="p-name">NGODAR — Catering &amp; Events</div>
+        <div class="p-desc">Built a booking platform for catering and event services. Designed UI for bookings, menus, and vendor listings. Enabled vendor registration and payment integration.</div>
+        <div class="p-tags"><span class="ptag">HTML</span><span class="ptag">CSS</span><span class="ptag">JavaScript</span><span class="ptag">UI Design</span></div>
+        <div class="p-links">
+          <a href="https://github.com/sofiabalqis13/NGODAR.git" target="_blank" class="p-link gh">⌥ GitHub</a>
+          <a href="https://sofia13.pythonanywhere.com/" target="_blank" class="p-link live">↗ Live Demo</a>
+        </div>
+      </div>
+    </div>
+    <div class="pcard rv" data-cat="mobile" style="transition-delay:.1s">
+      <img src="images/jomjalan.png" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;" alt="JomJalan Project"/>
+      <div class="p-body">
+        <div class="p-type">Mobile App · Nov 2024</div>
+        <div class="p-name">JomJalan — Step Tracker</div>
+        <div class="p-desc">Step-tracking mobile app with map and music features. Integrated Google Maps API using MIT App Inventor for real-time workout tracking.</div>
+        <div class="p-tags"><span class="ptag">MIT App Inventor</span><span class="ptag">Google Maps API</span></div>
+      </div>
+    </div>
+    
+     <div class="pcard rv" data-cat="web" style="transition-delay:.05s">
+      <img src="images/movie.png" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;" alt="movie Project"/>
+      <div class="p-body">
+        <div class="p-type">Full Stack · Sep – Oct 2024</div>
+        <div class="p-name">Movie Ticketing System</div>
+        <div class="p-desc">Full-stack web app using Django, Python, and JavaScript. Implemented user authentication and ticket booking. Designed SQLite database for users and transactions.</div>
+        <div class="p-tags"><span class="ptag">Django</span><span class="ptag">Python</span><span class="ptag">JavaScript</span><span class="ptag">SQLite</span></div>
+        <div class="p-links">
+          <a href="https://github.com/sofiabalqis13/Movie-Ticketing-Website.git" target="_blank" class="p-link gh">⌥ GitHub</a>
+          <a href="https://sofia15.pythonanywhere.com/login/?next=/home/" target="_blank" class="p-link live">↗ Live Demo</a>
+        </div>
+      </div>
+    </div>
+    <div class="pcard rv" data-cat="web" style="transition-delay:.1s">
+      <img src="images/makan.png" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;" alt="maKan Project"/>
+      <div class="p-body">
+        <div class="p-type">Front-End Development · Aug – Sep 2024</div>
+        <div class="p-name">maKan — Student Food Ordering</div>
+        <div class="p-desc">Food ordering website for students near colleges. Designed UI for menus, listings, and ordering pages. Integrated frontend with backend database systems.</div>
+        <div class="p-tags"><span class="ptag">HTML</span><span class="ptag">CSS</span><span class="ptag">JavaScript</span><span class="ptag">Database</span></div>
+        <div class="p-links">
+          <a href="https://github.com/sofiabalqis13/maKan.git" target="_blank" class="p-link gh">⌥ GitHub</a>
+          <a href="https://sofia16.pythonanywhere.com/" target="_blank" class="p-link live">↗ Live Demo</a>
+        </div>
+      </div>
+    </div>
+   
+  
+    </div>
+  </div>
+</section>
+
+<section id="awards">
+  <div class="sec-eyebrow rv">04 — Recognition</div>
+  <h2 class="sec-h rv" style="transition-delay:.08s">Awards &amp; <em>Achievements</em></h2>
+  <div class="aw-grid">
+  
+    <div class="acard rv" style="transition-delay:.06s">
+      <img src="images/innovex.png" style="width:100%;aspect-ratio:16/9;object-fit:contain;display:block;background:var(--soft);" alt="innovex Project"/>
+      <div class="acard-body"><span class="ab-badge ab-gold">Gold Award</span><div class="ac-title">Gold Award — Innovex 2024</div><div class="ac-org">International Innovation Exhibition · 2024</div><div class="ac-desc">Received the Gold Award at Innovex 2024 for an innovative project demonstrating excellence in applied technology at the international level.</div></div>
+    </div>
+    <div class="acard rv" style="transition-delay:.12s">
+      <img src="images/ice.png" style="width:100%;aspect-ratio:16/9;object-fit:contain;display:block;background:var(--soft);" alt="ice Project"/>
+      <div class="acard-body"><span class="ab-badge ab-silver">Silver Award</span><div class="ac-title">Silver Award — ICE-CInno 2024</div><div class="ac-org">International Competition on Computing Innovation · 2024</div><div class="ac-desc">Awarded Silver at this international computing innovation competition, recognising outstanding contributions among participants from multiple countries.</div></div>
+    </div>
+    
+    <div class="acard rv" style="transition-delay:.12s">
+      <img src="images/irie.png" style="width:100%;aspect-ratio:16/9;object-fit:contain;display:block;background:var(--soft);" alt="irie Project"/>
+      <div class="acard-body"><span class="ab-badge ab-silver">Silver Award</span><div class="ac-title">Silver Award — I-RIE 2021</div><div class="ac-org">International Research Invention, Innovation &amp; Exhibition · 2021</div><div class="ac-desc">Earned a Silver Award at this prestigious international exhibition while still in secondary school, demonstrating exceptional research ability at a young age.</div></div>
+    </div>
+    <div class="acard rv" style="transition-delay:.18s">
+      <img src="images/worldinno.png" style="width:100%;aspect-ratio:16/9;object-fit:contain;display:block;background:var(--soft);" alt="worldinno Project"/>
+      <div class="acard-body"><span class="ab-badge ab-gold">Gold Award</span><div class="ac-title">Gold Award — World Innovative Science Fair 2021</div><div class="ac-org">Sustainable Green Chemical &amp; Fuel Production from Municipal Waste · 2021</div><div class="ac-desc">Gold at the World Innovative Science Fair for a project on sustainable green fuel production from waste — reflecting a passion for environmental sustainability.</div></div>
+    </div>
+    <div class="acard rv" style="transition-delay:.06s">
+      <img src="images/innovation.png" style="width:100%;aspect-ratio:16/9;object-fit:contain;display:block;background:var(--soft);" alt="innovex Project"/>
+      <div class="acard-body"><span class="ab-badge ab-silver">2nd Place</span><div class="ac-title">Innovation, Robotics &amp; Coding Competition</div><div class="ac-org">East Coast Region · 2021</div><div class="ac-desc">Placed 2nd in the East Coast Region competition, demonstrating strong technical and creative problem-solving in engineering and programming challenges.</div></div>
+    </div>
+    <div class="acard rv" style="transition-delay:.12s">
+      <img src="images/ifla.png" style="width:100%;aspect-ratio:16/9;object-fit:contain;display:block;background:var(--soft);" alt="ifla Project"/>
+      <div class="acard-body"><span class="ab-badge ab-special">National Level</span><div class="ac-title">IFLA Junior Library Prefects Digital</div><div class="ac-org">National Level · 2020</div><div class="ac-desc">Recognised nationally through the IFLA Junior Library Prefects Digital programme, promoting digital literacy and reading culture among young Malaysians.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="volunteering">
+  <div class="sec-eyebrow rv">05 — Community &amp; Giving Back</div>
+  <h2 class="sec-h rv" style="transition-delay:.08s">Volunteer <em>Contributions</em></h2>
+  <div class="vol-grid">
+    <div class="vcard rv">
+      <div class="vcard-img-side">
+         <img src="images/rakan.jpeg" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;" alt="rakan"/>
+      </div>
+      <div class="vcard-body">
+        <div>
+          <div class="vc-date">2025</div>
+          <div class="vc-title">Program Rakan Prihatin: Give Back Rakan Muda</div>
+          <div class="vc-org">District of Petaling, Selangor</div>
+          <div class="vc-desc">Participated as a volunteer in Program Rakan Prihatin, contributing to community outreach activities supporting underprivileged youth in the District of Petaling. Assisted in organising programmes, distributing resources, and engaging directly with the community to foster care and solidarity.</div>
+        </div>
+        <span class="vc-tag">Community Outreach</span>
+      </div>
+    </div>
+    <div class="vcard rv" style="transition-delay:.08s">
+      <div class="vcard-img-side">
+        <img src="images/tutor.jpeg" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;" alt="tutor Project"/>
+      </div>
+      <div class="vcard-body">
+        <div>
+          <div class="vc-date">Ongoing</div>
+          <div class="vc-title">Volunteer Tutor — Education Recovery Tutoring Initiative</div>
+          <div class="vc-org">ERTI · Teach For Malaysia</div>
+          <div class="vc-desc">Serving as a volunteer tutor under Teach For Malaysia's ERTI programme, providing academic support to students whose education was disrupted. Delivering tutoring sessions to help learners rebuild foundational skills and regain confidence — directly embodying my commitment to youth empowerment and equal opportunity.</div>
+        </div>
+        <span class="vc-tag">Education · Youth Empowerment</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="sec-eyebrow rv">06 — Capabilities</div>
+  <h2 class="sec-h rv" style="transition-delay:.08s">Skills &amp; <em>Expertise</em></h2>
+  <div class="sk-cols">
+    <div>
+      <div class="sk-group rv">
+        <div class="sk-glabel">Programming Languages</div>
+        <div class="sk-bars">
+          <div class="sk-row"><div class="sk-top"><span>Python</span><span class="sk-pct">85%</span></div><div class="sk-track"><div class="sk-fill" data-w="85"></div></div></div>
+          <div class="sk-row"><div class="sk-top"><span>JavaScript</span><span class="sk-pct">80%</span></div><div class="sk-track"><div class="sk-fill" data-w="80"></div></div></div>
+          <div class="sk-row"><div class="sk-top"><span>HTML / CSS</span><span class="sk-pct">82%</span></div><div class="sk-track"><div class="sk-fill" data-w="82"></div></div></div>
+          <div class="sk-row"><div class="sk-top"><span>SQL / MySQL / SQLite</span><span class="sk-pct">82%</span></div><div class="sk-track"><div class="sk-fill" data-w="82"></div></div></div>
+          <div class="sk-row"><div class="sk-top"><span>R (Data Analytics)</span><span class="sk-pct">75%</span></div><div class="sk-track"><div class="sk-fill" data-w="75"></div></div></div>
+        </div>
+      </div>
+      <div class="sk-group rv" style="transition-delay:.08s">
+        <div class="sk-glabel">Testing &amp; QA</div>
+        <div class="sk-bars">
+          <div class="sk-row"><div class="sk-top"><span>Katalon Studio</span><span class="sk-pct">80%</span></div><div class="sk-track"><div class="sk-fill" data-w="80"></div></div></div>
+          <div class="sk-row"><div class="sk-top"><span>Test Case Design</span><span class="sk-pct">85%</span></div><div class="sk-track"><div class="sk-fill" data-w="85"></div></div></div>
+          <div class="sk-row"><div class="sk-top"><span>Manual Testing</span><span class="sk-pct">83%</span></div><div class="sk-track"><div class="sk-fill" data-w="83"></div></div></div>
+          <div class="sk-row"><div class="sk-top"><span>Debugging</span><span class="sk-pct">78%</span></div><div class="sk-track"><div class="sk-fill" data-w="78"></div></div></div>
+        </div>
+      </div>
+      <div class="sk-group rv" style="transition-delay:.16s">
+        <div class="sk-glabel">Soft Skills</div>
+        <div class="soft-skills">
+          <div class="soft-item">Leadership</div><div class="soft-item">Teamwork</div>
+          <div class="soft-item">Communication</div><div class="soft-item">Problem-Solving</div>
+          <div class="soft-item">Adaptability</div><div class="soft-item">Critical Thinking</div>
+          <div class="soft-item">Attention to Detail</div><div class="soft-item">Responsibility</div>
+          <div class="soft-item">Initiative</div><div class="soft-item">Resilience</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sk-group rv rv-r" style="transition-delay:.08s">
+        <div class="sk-glabel">Tools &amp; Software</div>
+        <div class="chip-cloud">
+          <span class="chip">Microsoft Office</span><span class="chip">Microsoft Project</span>
+          <span class="chip">Figma</span><span class="chip">Draw.io</span>
+          <span class="chip">Canva</span><span class="chip">CapCut</span>
+          <span class="chip">VirtualBox</span><span class="chip">Cisco Packet Tracer</span>
+          <span class="chip">Arduino IDE</span><span class="chip">Blynk</span>
+          <span class="chip">MIT App Inventor</span><span class="chip">Anaconda</span>
+          <span class="chip">RStudio</span><span class="chip">Katalon Studio</span>
+          <span class="chip">Katalon Recorder</span><span class="chip">Bitnami TestLink</span>
+          <span class="chip">Postman</span><span class="chip">MySQL / SQLite</span>
+        </div>
+      </div>
+      <div class="sk-group rv rv-r" style="transition-delay:.16s">
+        <div class="sk-glabel">Languages</div>
+        <div class="sk-bars" style="gap:.7rem">
+          <div class="sk-row"><div class="sk-top"><span>Bahasa Melayu</span><span class="sk-pct">Native</span></div><div class="sk-track"><div class="sk-fill" data-w="100"></div></div></div>
+          <div class="sk-row"><div class="sk-top"><span>English</span><span class="sk-pct">Professional</span></div><div class="sk-track"><div class="sk-fill" data-w="80"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="ct-inner">
+    <div class="sec-eyebrow rv">07 — Get in Touch</div>
+    <h2 class="ct-h rv" style="transition-delay:.08s">Let's build<br>something<br><em>meaningful</em></h2>
+    <p class="ct-sub rv" style="transition-delay:.16s">Open to scholarship opportunities, research collaborations, and impactful projects aligned with technology and community empowerment.</p>
+    <div class="ct-links rv" style="transition-delay:.24s">
+      <a href="mailto:balqisnursofia2@gmail.com" class="ct-link"><span class="ctl-label">Email</span><span class="ctl-val">balqisnursofia2@gmail.com</span></a>
+      <a href="tel:+60122949799" class="ct-link"><span class="ctl-label">Phone</span><span class="ctl-val">012-294 9799</span></a>
+      <a href="https://www.linkedin.com/in/sofiabalqis/" target="_blank" class="ct-link"><span class="ctl-label">LinkedIn</span><span class="ctl-val">linkedin.com/in/sofiabalqis</span></a>
+      <div class="ct-link" style="cursor:default"><span class="ctl-label">Location</span><span class="ctl-val">Kuantan, Pahang, Malaysia</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="ft">© 2026 Nur Sofia Balqis Binti Rospi</span>
+  <span class="ft">My Portfolio ·</span>
+</footer>
+
+<script>
+window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('gone'),1700));
+
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=(mx-4)+'px';cur.style.top=(my-4)+'px'});
+(function lp(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(lp)})();
+document.querySelectorAll('a,button,.pcard,.acard,.vcard,.vrow,.chip').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+});
+
+const nav=document.getElementById('nav');
+const secs=[...document.querySelectorAll('section[id]')];
+const nas=[...document.querySelectorAll('.nav-mid a')];
+window.addEventListener('scroll',()=>{
+  const s=document.documentElement;
+  document.getElementById('pgbar').style.width=(window.scrollY/(s.scrollHeight-s.clientHeight)*100)+'%';
+  nav.classList.toggle('compact',window.scrollY>80);
+  let cur2='';secs.forEach(s2=>{if(window.scrollY>=s2.offsetTop-200)cur2=s2.id});
+  nas.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur2));
+});
+
+const ro=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');ro.unobserve(e.target)}})},{threshold:.06});
+document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el=>ro.observe(el));
+
+const sbo=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.sk-fill[data-w]').forEach(b=>b.style.width=b.dataset.w+'%');sbo.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('#skills').forEach(el=>sbo.observe(el));
+
+function countUp(el){
+  const t=parseFloat(el.dataset.n),d=parseInt(el.dataset.d||0),plus=el.dataset.plus==='1';
+  let st=null;
+  function fr(ts){if(!st)st=ts;const p=Math.min((ts-st)/1800,1),ease=1-Math.pow(1-p,3),v=ease*t;
+    el.textContent=(d?v.toFixed(d):Math.round(v))+(plus?'+':'');if(p<1)requestAnimationFrame(fr);}
+  requestAnimationFrame(fr);
+}
+const cuo=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('[data-n]').forEach(countUp);cuo.disconnect()}})},{threshold:.2});
+const hs=document.querySelector('.hero-bottom');if(hs)cuo.observe(hs);
+
+document.querySelectorAll('.pf').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.pf').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+    const f=btn.dataset.f;
+    document.querySelectorAll('.pcard').forEach(c=>{
+      const show=f==='all'||c.dataset.cat===f;
+      c.style.transition='opacity .35s,transform .35s';
+      c.style.opacity=show?'1':'0';c.style.transform=show?'':'scale(.96)';c.style.pointerEvents=show?'auto':'none';
+    });
+  });
+});
+
+function prevImg(input,wrapId,imgId){
+  const file=input.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=e=>{document.getElementById(wrapId).style.display='none';const img=document.getElementById(imgId);img.src=e.target.result;img.style.display='block';};
+  r.readAsDataURL(file);
+}
+function prevAward(input,wrapId){
+  const file=input.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const wrap=document.getElementById(wrapId);
+    const img=document.createElement('img');
+    img.src=e.target.result;img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;z-index:1';
+    wrap.style.display='none';wrap.parentNode.appendChild(img);
+  };
+  r.readAsDataURL(file);
+}
+function prevVol(input,wrapId){
+  const file=input.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const wrap=document.getElementById(wrapId);
+    const img=document.createElement('img');
+    img.src=e.target.result;img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;z-index:1';
+    wrap.style.display='none';wrap.parentNode.appendChild(img);
+  };
+  r.readAsDataURL(file);
+}
+
+const phrases=['Computer Science Graduate · CGPA 3.80','My Portfolio · 2026','Web Developer · QA Tester · DB Architect','Kuantan, Pahang, Malaysia'];
+let pi=0,ci=0,del=false;
+const typed=document.getElementById('typed');
+function type(){
+  const ph=phrases[pi];
+  if(!del){typed.textContent=ph.slice(0,++ci);if(ci===ph.length){del=true;setTimeout(type,2000);return;}}
+  else{typed.textContent=ph.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length;}}
+  setTimeout(type,del?38:65);
+}
+setTimeout(type,1900);
+</script>
+</body>
+</html>
