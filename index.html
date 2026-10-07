@@ -21,9 +21,10 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--white);color:var(--ink);font-family:var(--sans);overflow-x:hidden;cursor:none}
+body{background:var(--white);color:var(--ink);font-family:var(--sans);overflow-x:hidden}
 
 /* CURSOR */
+#cur,#cur-ring{display:none!important}
 #cur{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--ink);pointer-events:none;z-index:9999;transition:width .3s,height .3s,background .3s,transform .2s}
 #cur-ring{position:fixed;width:32px;height:32px;border-radius:50%;border:1px solid rgba(17,17,16,.3);pointer-events:none;z-index:9998;transition:width .3s,height .3s,border-color .3s,left .12s ease,top .12s ease;transform:translate(-50%,-50%)}
 body.hov #cur{transform:scale(0)}
@@ -130,10 +131,10 @@ section:not(#hero){padding:7rem 4rem}
 /* PROJECTS */
 #projects{background:var(--soft)}
 .proj-filters{display:flex;gap:.45rem;margin-bottom:3rem;flex-wrap:wrap}
-.pf{font-size:.63rem;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:.32rem .85rem;border:1px solid var(--border);border-radius:2rem;background:transparent;color:var(--muted);cursor:none;transition:all .22s}
+.pf{font-size:.63rem;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:.32rem .85rem;border:1px solid var(--border);border-radius:2rem;background:transparent;color:var(--muted);cursor:pointer;transition:all .22s}
 .pf.on,.pf:hover{background:var(--ink);color:var(--white);border-color:var(--ink)}
 .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.pcard{background:var(--white);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;transition:transform .35s,box-shadow .35s;cursor:none}
+.pcard{background:var(--white);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;transition:transform .35s,box-shadow .35s}
 .pcard:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(17,17,16,.1)}
 .pcard.hide{opacity:0;pointer-events:none;transform:scale(.96)}
 .p-img-upload{width:100%;aspect-ratio:16/9;background:var(--soft);border-bottom:1.5px dashed var(--mid);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.5rem;cursor:pointer;transition:border-color .2s,background .2s;position:relative}
@@ -156,7 +157,7 @@ section:not(#hero){padding:7rem 4rem}
 /* AWARDS */
 #awards{background:var(--white)}
 .aw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.acard{border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:box-shadow .3s,transform .3s;cursor:none}
+.acard{border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:box-shadow .3s,transform .3s}
 .acard:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(17,17,16,.08)}
 .acard-img-wrap{width:100%;aspect-ratio:4/3;position:relative;overflow:hidden;background:var(--soft)}
 .acard-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
@@ -177,7 +178,7 @@ section:not(#hero){padding:7rem 4rem}
 /* VOLUNTEERING */
 #volunteering{background:var(--soft)}
 .vol-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
-.vcard{background:var(--white);border-radius:6px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;transition:box-shadow .3s,transform .3s;cursor:none}
+.vcard{background:var(--white);border-radius:6px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;transition:box-shadow .3s,transform .3s}
 .vcard:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(17,17,16,.08)}
 .vcard-img-side{position:relative;overflow:hidden;background:var(--mid);min-height:220px}
 .vcard-img-side img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
@@ -352,13 +353,13 @@ footer{padding:2rem 4rem;border-top:1px solid var(--border);display:flex;justify
       <div class="sec-eyebrow rv">01 — About</div>
       <h2 class="sec-h rv" style="transition-delay:.08s">Who I <em>am</em></h2>
       <div class="ab-quote rv" style="transition-delay:.14s">"Adaptable, responsible, and eager to continue learning through scholarship opportunities to support future studies and make a positive impact in society."</div>
-      <p class="ab-body rv" style="transition-delay:.18s">I am Nur Sofia Balqis Binti Rospi, a Computer Science Diploma graduate from Kolej Profesional MARA Indera Mahkota, Pahang, with a CGPA of 3.80. I am experienced in web development, test automation, and database management, and I am deeply passionate about applying technology to create meaningful change in communities.</p>
+      <p class="ab-body rv" style="transition-delay:.18s">I am Nur Sofia Balqis Binti Rospi, a Bachelor of Computer Science student at Universiti Kebangsaan Malaysia (UKM), building on a Diploma in Computer Science from Kolej Profesional MARA Indera Mahkota, Pahang, where I graduated with a CGPA of 3.80. I am experienced in web development, test automation, and database management, and I am now deepening my skills in artificial intelligence, driven by a passion for applying technology to create meaningful change in communities.</p>
       <p class="ab-body rv" style="transition-delay:.22s">During my internship at IDS Medical Systems, I gained hands-on experience in software quality assurance, executing automation tests on real medical systems. Beyond academics, I actively contribute as a volunteer tutor, college secretariat, and community programme participant — reflecting my commitment to leadership, teamwork, and social responsibility.</p>
       <div class="edu-block rv" style="transition-delay:.28s">
         <div class="edu-label">Education</div>
         <div class="edu-item">
           <div>
-            <div class="edu-name">Bachelor of Computer Science with Honours (Intelligent Machine)</div>
+            <div class="edu-name">Bachelor of Computer Science with Honours</div>
             <div class="edu-inst">Universiti Kebangsaan Malaysia (UKM) · Bangi, Selangor</div>
           </div>
           <div class="edu-right">
@@ -808,7 +809,7 @@ function prevVol(input,wrapId){
   r.readAsDataURL(file);
 }
 
-const phrases=['Computer Science Graduate · CGPA 3.80','My Portfolio · 2026','Web Developer · QA Tester · DB Architect','Kuantan, Pahang, Malaysia'];
+const phrases=['Computer Science Undergraduate · UKM','Aspiring AI Engineer','My Portfolio · 2026','Web Developer · QA Tester · DB Architect','Kuantan, Pahang, Malaysia'];
 let pi=0,ci=0,del=false;
 const typed=document.getElementById('typed');
 function type(){
